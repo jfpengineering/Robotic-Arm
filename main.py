@@ -119,49 +119,51 @@ class MainScreen(Screen):
             self.magnet = False
         
     def auto(self):
-        cyprus.set_servo_position(1, 1)
-        cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-        sleep(1)
-        cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-        sleep(.5)
-        s0.go_to_position_threaded(0.34)
-        while s0.is_busy():
-            sleep(.1)
-        cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-        sleep(.1)
-        while not self.isBallOnTallTower():
-            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(.5)
-            cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(.5)
-        cyprus.set_servo_position(1, .5)
-        sleep(.1)
-        cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-        sleep(.2)
-        s0.go_to_position_threaded(0)
-        sleep(3)
-        s0.go_to_position_threaded(.34)
-        while s0.is_busy():
-            sleep(.1)
-        cyprus.set_servo_position(1, 1)
-        sleep(.1)
-        cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-        sleep(.25)
-        cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-        sleep(.1)
-        s0.go_to_position_threaded(0)
-        while s0.is_busy():
-            sleep(.1)
-        while not self.isBallOnShortTower():
-            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(1)
+        amount_str = input("How many times would you like the Robotic Arm to run?\n")
+        amount = int(amount_str)
+        for i in range(amount):
+            cyprus.set_servo_position(1, 1)
             cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
             sleep(1)
-        cyprus.set_servo_position(1, .5)
-        sleep(.1)
-        cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-        sleep(2)
-        print("DONE!!!")
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.5)
+            s0.go_to_position_threaded(0.34)
+            while s0.is_busy():
+                sleep(.1)
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.1)
+            while not self.isBallOnTallTower():
+                cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+                sleep(.5)
+                cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+                sleep(.5)
+            cyprus.set_servo_position(1, .5)
+            sleep(.1)
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.2)
+            s0.go_to_position_threaded(0)
+            sleep(3)
+            s0.go_to_position_threaded(.34)
+            while s0.is_busy():
+                sleep(.1)
+            cyprus.set_servo_position(1, 1)
+            sleep(.1)
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.25)
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.1)
+            s0.go_to_position_threaded(0)
+            while s0.is_busy():
+                sleep(.1)
+            while not self.isBallOnShortTower():
+                cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+                sleep(1)
+                cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+                sleep(1)
+            cyprus.set_servo_position(1, .5)
+            sleep(.1)
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(2)
 
     def setArmPosition(self):
         s0.go_to_position_threaded(float(self.moveArm.value*.0034))
@@ -211,7 +213,6 @@ class MainScreen(Screen):
         sleep(.1)
         self.magnet = False
         self.is_arm = False
-        print("Home arm and turn off magnet")
 
     def resetColors(self):
         self.ids.armControl.color = YELLOW
