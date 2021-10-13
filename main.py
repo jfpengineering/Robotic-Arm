@@ -149,7 +149,7 @@ class MainScreen(Screen):
             cyprus.set_servo_position(1, 1)
             sleep(.1)
             cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(.25)
+            sleep(.5)
             cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
             sleep(.1)
             s0.go_to_position_threaded(0)
