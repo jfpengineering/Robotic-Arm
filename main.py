@@ -154,9 +154,9 @@ class MainScreen(Screen):
             sleep(.1)
         while not self.isBallOnShortTower():
             cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(.8)
+            sleep(1)
             cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(.8)
+            sleep(1)
         cyprus.set_servo_position(1, .5)
         sleep(.1)
         cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
@@ -177,6 +177,7 @@ class MainScreen(Screen):
             sleep(.1)
         s0.set_as_home()
         sleep(.1)
+        self.moveArm.value = 0.0
         print(s0.get_position_in_units())
         
     def isBallOnTallTower(self):
@@ -194,6 +195,9 @@ class MainScreen(Screen):
                 return False
         else:
             return True
+
+    def auto_thread(self):
+        Thread(target=self.auto).start()
         
     def initialize(self):
         cyprus.initialize()
@@ -215,6 +219,16 @@ class MainScreen(Screen):
         self.ids.auto.color = BLUE
 
     def quit(self):
+        cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+        sleep(.1)
+        self.homeArm()
+        while s0.is_busy():
+            sleep(.1)
+        cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+        sleep(1)
+        cyprus.set_servo_position(1, .5)
+        sleep(.1)
+        cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
         MyApp().stop()
     
 sm.add_widget(MainScreen(name = 'main'))

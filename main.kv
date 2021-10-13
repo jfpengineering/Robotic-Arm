@@ -30,7 +30,7 @@
             background_normal: ''
             size_hint: None,None
             size: 300,100
-            on_press: root.auto()
+            on_press: root.auto_thread()
             on_release: root.resetColors()
 
         # Turn on/off gate
@@ -38,7 +38,7 @@
             id: armControl
             color: 0.180, 0.188, 0.980, 1
             text: "Lower Arm"
-            center_x: root.width * 0.35
+            center_x: root.width * 0.25
             y: root.height * 0.35
             background_color: 0, 0, 0, 0
             background_normal: ''
@@ -48,10 +48,23 @@
             on_release: root.resetColors()
 
         DPEAButton:
+            id: homeArm
+            color: 0.180, 0.188, 0.980, 1
+            text: "Home Arm"
+            center_x: root.width * 0.5
+            y: root.height * 0.35
+            background_color: 0, 0, 0, 0
+            background_normal: ''
+            size_hint: None,None
+            size: 300,100
+            on_press: root.homeArm()
+            on_release: root.resetColors()
+
+        DPEAButton:
             id: magnetControl
             color: 0.180, 0.188, 0.980, 1
             text: "Hold Ball"
-            center_x: root.width * 0.65
+            center_x: root.width * 0.75
             y: root.height * 0.35
             background_color: 0, 0, 0, 0
             background_normal: ''
@@ -68,7 +81,7 @@
             id: moveArm
             orientation: 'horizontal'
             min: 0
-            max: 100
+            max: 200
             step: 1
             center_x: root.width * 0.6
             y: root.height * 0.15
